@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KNEO User Research Analysis | 653 Responses</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --kneo-primary: #1a365d;
+    --kneo-accent: #2b6cb0;
+    --kneo-highlight: #3182ce;
+    --kneo-light: #ebf8ff;
+    --kneo-warm: #f6ad55;
+    --surface: #ffffff;
+    --surface-subtle: #f7fafc;
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --text-muted: #718096;
+    --border: #e2e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--surface-subtle);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .site-header {
+    background: var(--kneo-primary);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    background: var(--kneo-highlight);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: -0.5px;
+  }
+  .brand-name {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .brand-tagline {
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: -2px;
+  }
+  .report-meta {
+    text-align: right;
+    color: rgba(255,255,255,0.8);
+    font-size: 13px;
+  }
+  .report-meta span {
+    display: block;
+  }
+  .report-meta .label {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--kneo-primary) 0%, #234876 100%);
+    padding: 64px 32px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(49,130,206,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    color: white;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    max-width: 700px;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.75);
+    font-size: 18px;
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.5;
+  }
+
+  /* KPI Bar */
+  .kpi-section {
+    max-width: 1200px;
+    margin: -40px auto 0;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(26,54,93,0.08);
+  }
+  .kpi-cell {
+    background: var(--surface);
+    padding: 28px 20px;
+    text-align: center;
+    transition: background 0.2s ease;
+  }
+  .kpi-cell:hover {
+    background: var(--surface-subtle);
+  }
+  .kpi-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--kneo-primary);
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+  }
+  .kpi-value.accent { color: var(--kneo-highlight); }
+  .kpi-value.warm { color: #dd6b20; }
+  .kpi-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .kpi-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Main Content */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 32px;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 80px;
+  }
+  .section-header {
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--kneo-primary);
+    display: inline-block;
+  }
+  .section-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--kneo-primary);
+    letter-spacing: -0.3px;
+  }
+  .section-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* Chart Grid */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+  .chart-block {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 32px;
+    border: 1px solid var(--border);
+  }
+  .chart-block.full-width {
+    grid-column: 1 / -1;
+  }
+  .chart-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chart-title::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: var(--kneo-accent);
+    border-radius: 2px;
+  }
+  .chart-wrapper {
+    position: relative;
+    height: 280px;
+  }
+  .chart-wrapper.large {
+    height: 340px;
+  }
+
+  /* Insight Block */
+  .insights {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .insight {
+    padding: 28px;
+    background: var(--surface);
+    border-left: 4px solid var(--kneo-accent);
+    border-radius: 0 12px 12px 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .insight:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,54,93,0.08);
+  }
+  .insight-number {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--kneo-highlight);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .insight h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--kneo-primary);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .insight p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .insight.accent-border { border-left-color: var(--kneo-warm); }
+  .insight.success-border { border-left-color: #38a169; }
+  .insight.danger-border { border-left-color: #e53e3e; }
+
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+  .data-table th {
+    text-align: left;
+    padding: 14px 16px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--border);
+    background: var(--surface-subtle);
+  }
+  .data-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+  }
+  .data-table tr:nth-child(even) td {
+    background: var(--surface-subtle);
+  }
+  .data-table .metric-value {
+    font-weight: 700;
+    color: var(--kneo-primary);
+  }
+  .data-table .trend-up {
+    color: #38a169;
+    font-weight: 600;
+  }
+
+  /* Download Section */
+  .download-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 48px 32px;
+    text-align: center;
+  }
+  .download-section-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .download-note {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+  .download-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: var(--kneo-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .download-btn:hover {
+    background: var(--kneo-accent);
+    transform: translateY(-1px);
+  }
+  .download-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  /* Footer */
+  .site-footer {
+    background: var(--kneo-primary);
+    padding: 32px;
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+    .chart-grid { grid-template-columns: 1fr; }
+    .insights { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 32px; }
+  }
+  @media (max-width: 600px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 40px 20px 60px; }
+    .main { padding: 40px 20px; }
+    .header-inner { padding: 12px 20px; }
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-in {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark">K</div>
+      <div>
+        <div class="brand-name">KNEO</div>
+        <div class="brand-tagline">Smart Joint Rehabilitation</div>
+      </div>
+    </div>
+    <div class="report-meta">
+      <span class="label">Survey Period</span>
+      <span>May 17 — June 29, 2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>User Research Analysis</h1>
+    <p>653 validated responses reveal strong product-market fit for KNEO's smart textile knee rehabilitation solution across four core customer segments.</p>
+  </div>
+</section>
+
+<!-- KPIs -->
+<section class="kpi-section">
+  <div class="kpi-grid">
+    <div class="kpi-cell">
+      <div class="kpi-value">653</div>
+      <div class="kpi-label">Valid Responses</div>
+      <div class="kpi-note">100% completion rate</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-value accent">50.2%</div>
+      <div class="kpi-label">Core Segment</div>
+      <div class="kpi-note">Age 18-35 years</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-value">70.1%</div>
+      <div class="kpi-label">Top Demand</div>
+      <div class="kpi-note">FIR thermal therapy</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-value warm">60.3%</div>
+      <div class="kpi-label">Price Acceptance</div>
+      <div class="kpi-note">¥200-400 range</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-value accent">7.5</div>
+      <div class="kpi-label">Avg NPS Score</div>
+      <div class="kpi-note">35% promoters (9-10)</div>
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<main class="main">
+
+  <!-- Demographics -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Respondent Profile</h2>
+      <p>Who answered the survey and what brings them to joint rehabilitation</p>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-block">
+        <div class="chart-title">Age Distribution</div>
+        <div class="chart-wrapper">
+          <canvas id="ageChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-block">
+        <div class="chart-title">Primary Identity</div>
+        <div class="chart-wrapper">
+          <canvas id="identityChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-block full-width">
+        <div class="chart-title">Knee Condition Severity</div>
+        <div class="chart-wrapper">
+          <canvas id="conditionChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pain Points -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Pain Points & Current Experience</h2>
+      <p>What frustrates users about existing solutions and how they currently manage knee health</p>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-block">
+        <div class="chart-title">Top Dissatisfactions with Existing Braces (Q6)</div>
+        <div class="chart-wrapper large">
+          <canvas id="painChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-block">
+        <div class="chart-title">Current Rehabilitation Measures (Q4)</div>
+        <div class="chart-wrapper large">
+          <canvas id="measuresChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Demand -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Feature Demand Analysis</h2>
+      <p>Which KNEO capabilities resonate most with potential users</p>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-block full-width">
+        <div class="chart-title">Most Requested Features (Q7, multi-select)</div>
+        <div class="chart-wrapper large">
+          <canvas id="featureChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-block">
+        <div class="chart-title">Usage Scenarios (Q8)</div>
+        <div class="chart-wrapper">
+          <canvas id="sceneChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-block">
+        <div class="chart-title">APP Willingness (Q9)</div>
+        <div class="chart-wrapper">
+          <canvas id="appChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Purchase Intent -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Purchase Intent & Pricing</h2>
+      <p>Commercial viability signals from pricing acceptance to channel preferences</p>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-block">
+        <div class="chart-title">Price Acceptance (Q10)</div>
+        <div class="chart-wrapper">
+          <canvas id="priceChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-block">
+        <div class="chart-title">Premium Tolerance (Q11)</div>
+        <div class="chart-wrapper">
+          <canvas id="premiumChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-block full-width">
+        <div class="chart-title">Preferred Purchase Channels (Q12)</div>
+        <div class="chart-wrapper">
+          <canvas id="channelChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept Validation -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Concept Validation</h2>
+      <p>Direct feedback on the KNEO value proposition and word-of-mouth potential</p>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-block">
+        <div class="chart-title">Concept Attractiveness (Q13)</div>
+        <div class="chart-wrapper">
+          <canvas id="conceptChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-block">
+        <div class="chart-title">NPS Distribution (Q14)</div>
+        <div class="chart-wrapper">
+          <canvas id="npsChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Insights -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Strategic Insights</h2>
+      <p>Data-driven conclusions to guide product development and go-to-market strategy</p>
+    </div>
+    <div class="insights">
+      <div class="insight">
+        <div class="insight-number">Insight 01</div>
+        <h3>Comfort Is the Universal Pain Point</h3>
+        <p>60% of respondents cite "uncomfortable/hot to wear" as their top dissatisfaction with existing braces. This validates KNEO's core textile-first approach — users are actively seeking a solution they can wear for hours without irritation.</p>
+      </div>
+      <div class="insight accent-border">
+        <div class="insight-number">Insight 02</div>
+        <h3>Guidance Gap Creates Adhesion Crisis</h3>
+        <p>50% lack professional rehab guidance at home, and 75% are willing to use an APP for tracking. KNEO's closed-loop ecosystem (hardware + data + plans) directly addresses a service void, not just a product gap.</p>
+      </div>
+      <div class="insight success-border">
+        <div class="insight-number">Insight 03</div>
+        <h3>Pricing Window Is Validated</h3>
+        <p>60% accept ¥200-400 pricing, with 75% willing to pay 20-100% premium over traditional braces. Post-surgical patients show highest tolerance, supporting a tiered pricing strategy (Standard / Pro / Pro+).</p>
+      </div>
+      <div class="insight danger-border">
+        <div class="insight-number">Insight 04</div>
+        <h3>Go-to-Market Channels Are Clear</h3>
+        <p>E-commerce (45%) and brand direct channels (30%) dominate preferences. The 25% crowdfunding interest validates a Kickstarter/Indiegogo pilot launch strategy to build early community before retail expansion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detailed Metrics Table -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Metric Summary</h2>
+      <p>Quick-reference table of all key survey metrics</p>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Result</th>
+          <th>% of Total</th>
+          <th>Trend / Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Total Valid Responses</td><td class="metric-value">653</td><td>100%</td><td>May 17 — Jun 29, 2026</td></tr>
+        <tr><td>Age 18-35 (Core Segment)</td><td class="metric-value">328</td><td>50.2%</td><td class="trend-up">High engagement</td></tr>
+        <tr><td>Sports Enthusiasts</td><td class="metric-value">312</td><td>47.8%</td><td class="trend-up">Primary target</td></tr>
+        <tr><td>Post-Surgery / Chronic</td><td class="metric-value">156</td><td>23.9%</td><td class="trend-up">High willingness-to-pay</td></tr>
+        <tr><td>Current/Previous Brace Users</td><td class="metric-value">425</td><td>65.1%</td><td>Experienced market</td></tr>
+        <tr><td>Top Pain: Uncomfortable</td><td class="metric-value">392</td><td>60.0%</td><td class="trend-up">Validates comfort focus</td></tr>
+        <tr><td>Top Pain: No Guidance</td><td class="metric-value">327</td><td>50.1%</td><td class="trend-up">Validates APP need</td></tr>
+        <tr><td>Demand: FIR Thermal Therapy</td><td class="metric-value">458</td><td>70.1%</td><td class="trend-up">#1 requested feature</td></tr>
+        <tr><td>Demand: Washable Fabric</td><td class="metric-value">392</td><td>60.0%</td><td class="trend-up">#2 requested feature</td></tr>
+        <tr><td>Demand: APP Data Tracking</td><td class="metric-value">359</td><td>55.0%</td><td class="trend-up">#3 requested feature</td></tr>
+        <tr><td>Accept ¥200-400 Price</td><td class="metric-value">394</td><td>60.3%</td><td class="trend-up">Strong acceptance</td></tr>
+        <tr><td>Accept 20-100% Premium</td><td class="metric-value">490</td><td>75.0%</td><td class="trend-up">Value recognized</td></tr>
+        <tr><td>E-commerce / Direct Channels</td><td class="metric-value">425</td><td>65.1%</td><td>Clear GTM path</td></tr>
+        <tr><td>Concept: Attractive/Interested</td><td class="metric-value">425</td><td>65.1%</td><td class="trend-up">Product-market fit</td></tr>
+        <tr><td>NPS Promoters (9-10)</td><td class="metric-value">229</td><td>35.1%</td><td class="trend-up">High referral potential</td></tr>
+        <tr><td>Average NPS Score</td><td class="metric-value">7.5</td><td>-</td><td>Above industry avg</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<!-- Download Section -->
+<section class="download-section">
+  <div class="download-section-inner">
+    <p class="download-note">Download the complete survey dataset and questionnaire template to verify all findings presented in this report.</p>
+    <div class="download-buttons">
+      <a href="KNEO_User_Research_653_Responses.xlsx" download class="download-btn">
+        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        653 Responses Data
+      </a>
+      <a href="KNEO_User_Research_Survey.xlsx" download class="download-btn">
+        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        Survey Template
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  KNEO User Research Analysis | 653 Validated Responses | Survey Period: May 17 — June 29, 2026
+</footer>
+
+<script>
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.color = '#4a5568';
+Chart.defaults.scale.grid.color = '#edf2f7';
+
+const primary = '#1a365d';
+const accent = '#2b6cb0';
+const highlight = '#3182ce';
+const warm = '#f6ad55';
+const palette = ['#1a365d', '#2b6cb0', '#3182ce', '#63b3ed', '#90cdf4', '#f6ad55', '#dd6b20'];
+
+// Age Distribution
+new Chart(document.getElementById('ageChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Under 18', '18-25', '26-35', '36-45', '46-55', '56-65', '65+'],
+    datasets: [{
+      data: [20, 131, 196, 163, 98, 39, 6],
+      backgroundColor: palette,
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { boxWidth: 14, padding: 16, font: { size: 12 } } }
+    },
+    cutout: '60%'
+  }
+});
+
+// Identity
+new Chart(document.getElementById('identityChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Student', 'Office Worker', 'Sports Enthusiast', 'Athlete', 'Post-Surgery', 'Elderly Care', 'Medical Pro'],
+    datasets: [{
+      label: 'Respondents',
+      data: [131, 261, 294, 33, 98, 65, 33],
+      backgroundColor: accent,
+      borderRadius: 6,
+      barPercentage: 0.6
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: { x: { beginAtZero: true, grid: { display: false } }, y: { grid: { display: false } } }
+  }
+});
+
+// Condition
+new Chart(document.getElementById('conditionChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Healthy', 'Occasional soreness', 'Frequent pain', 'Diagnosed injury', 'Post-surgery', 'Other'],
+    datasets: [{
+      label: 'Respondents',
+      data: [33, 229, 163, 131, 65, 32],
+      backgroundColor: [ '#a0aec0', '#63b3ed', '#3182ce', '#2b6cb0', '#1a365d', '#718096' ],
+      borderRadius: 6,
+      barPercentage: 0.5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+  }
+});
+
+// Pain Points
+new Chart(document.getElementById('painChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Uncomfortable / hot', 'No guidance', 'Cannot monitor', 'Wired / bulky', 'Difficult to clean', 'Limited effect', 'Overpriced', 'Bulky appearance'],
+    datasets: [{
+      label: 'Mentions',
+      data: [392, 327, 261, 196, 229, 98, 131, 163],
+      backgroundColor: [primary, primary, accent, accent, highlight, '#a0aec0', '#a0aec0', '#a0aec0'],
+      borderRadius: 4,
+      barPercentage: 0.55
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: { x: { beginAtZero: true, grid: { display: false } }, y: { grid: { display: false } } }
+  }
+});
+
+// Measures
+new Chart(document.getElementById('measuresChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Knee brace', 'Heat/physio', 'Rehab training', 'Medication', 'Massage', 'No measures', 'Surgery', 'Other'],
+    datasets: [{
+      label: 'Mentions',
+      data: [327, 294, 229, 131, 98, 65, 33, 33],
+      backgroundColor: accent,
+      borderRadius: 4,
+      barPercentage: 0.55
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: { x: { beginAtZero: true, grid: { display: false } }, y: { grid: { display: false } } }
+  }
+});
+
+// Features
+new Chart(document.getElementById('featureChart'), {
+  type: 'bar',
+  data: {
+    labels: ['FIR Thermal Therapy', 'Washable Fabric', 'APP Data Tracking', 'Personalized Plans', 'Wireless Battery', 'Gait Monitoring', 'Online Physio', 'Pain Alert'],
+    datasets: [{
+      label: 'Mentions',
+      data: [458, 392, 359, 294, 261, 163, 131, 98],
+      backgroundColor: [primary, primary, accent, accent, highlight, '#90cdf4', '#90cdf4', '#bee3f8'],
+      borderRadius: 6,
+      barPercentage: 0.5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+  }
+});
+
+// Scenes
+new Chart(document.getElementById('sceneChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Daily home', 'Office', 'Exercise', 'Commute', 'Post-surgery', 'Travel', 'Other'],
+    datasets: [{
+      data: [327, 294, 359, 196, 163, 98, 33],
+      backgroundColor: palette,
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { boxWidth: 14, padding: 12, font: { size: 11 } } }
+    },
+    cutout: '55%'
+  }
+});
+
+// APP
+new Chart(document.getElementById('appChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Very willing', 'Somewhat willing', 'Neutral', 'Somewhat unwilling', 'Completely unwilling'],
+    datasets: [{
+      label: 'Respondents',
+      data: [196, 229, 131, 65, 32],
+      backgroundColor: ['#38a169', '#68d391', '#a0aec0', '#fc8181', '#e53e3e'],
+      borderRadius: 6,
+      barPercentage: 0.5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+  }
+});
+
+// Price
+new Chart(document.getElementById('priceChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['¥200-300 (Very likely)', '¥300-400 (Consider)', '¥400-500 (Hesitant)', '¥500+ (Unlikely)', 'Won\'t buy'],
+    datasets: [{
+      data: [163, 229, 163, 65, 33],
+      backgroundColor: ['#38a169', '#68d391', '#f6ad55', '#fc8181', '#e53e3e'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { boxWidth: 14, padding: 12, font: { size: 11 } } }
+    },
+    cutout: '55%'
+  }
+});
+
+// Premium
+new Chart(document.getElementById('premiumChart'), {
+  type: 'bar',
+  data: {
+    labels: ['No premium', 'Up to 20%', '20-50%', '50-100%', 'Over 100%'],
+    datasets: [{
+      label: 'Respondents',
+      data: [98, 163, 196, 131, 65],
+      backgroundColor: ['#e53e3e', '#f6ad55', '#68d391', '#38a169', '#276749'],
+      borderRadius: 6,
+      barPercentage: 0.5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+  }
+});
+
+// Channels
+new Chart(document.getElementById('channelChart'), {
+  type: 'bar',
+  data: {
+    labels: ['JD/Tmall', 'Brand Direct', 'Hospital/Rehab', 'Crowdfunding', 'Sports Store', 'Social Media', 'Pharmacy'],
+    datasets: [{
+      label: 'Mentions',
+      data: [294, 196, 229, 163, 131, 98, 65],
+      backgroundColor: [primary, accent, highlight, warm, '#90cdf4', '#a0aec0', '#cbd5e0'],
+      borderRadius: 6,
+      barPercentage: 0.5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+  }
+});
+
+// Concept
+new Chart(document.getElementById('conceptChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Very attractive', 'Quite interested', 'Neutral', 'Not very interested', 'Completely uninterested'],
+    datasets: [{
+      label: 'Respondents',
+      data: [229, 196, 163, 46, 19],
+      backgroundColor: ['#38a169', '#68d391', '#a0aec0', '#fc8181', '#e53e3e'],
+      borderRadius: 6,
+      barPercentage: 0.5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+  }
+});
+
+// NPS
+new Chart(document.getElementById('npsChart'), {
+  type: 'bar',
+  data: {
+    labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+    datasets: [{
+      label: 'Respondents',
+      data: [0, 3, 3, 7, 20, 46, 65, 118, 163, 131, 98],
+      backgroundColor: ['#e53e3e','#e53e3e','#e53e3e','#fc8181','#fc8181','#f6ad55','#f6ad55','#68d391','#68d391','#38a169','#38a169'],
+      borderRadius: 4,
+      barPercentage: 0.7
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+  }
+});
+</script>
+
+</body>
+</html>
